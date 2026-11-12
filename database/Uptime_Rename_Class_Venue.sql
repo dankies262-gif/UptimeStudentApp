@@ -1,0 +1,28 @@
+USE [Uptime];
+GO
+SET ANSI_NULLS ON;
+SET QUOTED_IDENTIFIER ON;
+SET XACT_ABORT ON;
+GO
+
+IF COL_LENGTH(N'dbo.UptimeClassSchedules', N'Venue') IS NULL
+BEGIN
+    IF COL_LENGTH(N'dbo.UptimeClassSchedules', N'Location') IS NOT NULL
+    BEGIN
+        EXEC sp_rename N'dbo.UptimeClassSchedules.Location', N'Venue', N'COLUMN';
+    END
+    ELSE
+    BEGIN
+        ALTER TABLE dbo.UptimeClassSchedules ADD Venue NVARCHAR(150) NOT NULL CONSTRAINT DF_UptimeClassSchedules_Venue DEFAULT N'';
+    END;
+END;
+GO
+
+ALTER TABLE dbo.UptimeClassSchedules ALTER COLUMN Venue NVARCHAR(150) NOT NULL;
+GO
+
+SELECT COLUMN_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, IS_NULLABLE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA=N'dbo' AND TABLE_NAME=N'UptimeClassSchedules'
+ORDER BY ORDINAL_POSITION;
+GO

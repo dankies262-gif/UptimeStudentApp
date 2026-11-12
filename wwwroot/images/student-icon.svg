@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Student">
+  <defs>
+    <linearGradient id="shirt" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#7B8FFF"/><stop offset="1" stop-color="#4A66D8"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="0.2" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#FFD447"/><stop offset="1" stop-color="#F59D0B"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5C42C9"/><stop offset="1" stop-color="#32217F"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="8" stdDeviation="8" flood-color="#1B2450" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <path d="M43 244c8-49 39-72 85-72s77 23 85 72H43z" fill="url(#shirt)"/>
+    <path d="M109 162h38v32c-5 12-33 12-38 0v-32z" fill="url(#skin)"/>
+    <circle cx="128" cy="111" r="67" fill="url(#skin)"/>
+    <path d="M128 36l107 29-107 31L21 65l107-29z" fill="url(#cap)"/>
+    <path d="M21 65l107 31 107-31-107 38L21 65z" fill="#3B2A91" opacity=".8"/>
+    <path d="M225 83v51" stroke="#4630A6" stroke-width="5" stroke-linecap="round"/>
+    <path d="M225 133c10 0 15 8 11 17l-11 18-11-18c-4-9 1-17 11-17z" fill="#5A3FC4"/>
+    <ellipse cx="128" cy="123" rx="49" ry="52" fill="url(#skin)"/>
+  </g>
+</svg>
