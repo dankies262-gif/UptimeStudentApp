@@ -5,7 +5,7 @@ using UptimeStudentApp.Models;
 namespace UptimeStudentApp.Data;
 
 /// <summary>
-/// EF Core database context. Table and column names match the PostgreSQL schema.
+/// EF Core database context. Table and column names match the SQL Server schema.
 /// </summary>
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
@@ -35,23 +35,28 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
         modelBuilder.Entity<Alarm>().ToTable("UptimeAlarms");
         modelBuilder.Entity<StudentSetting>().ToTable("UptimeStudentSettings");
 
-        modelBuilder.Entity<StudentProfile>().HasIndex(x => x.Email).IsUnique().HasFilter("\"Email\" IS NOT NULL");
+        var isPostgres = Database.ProviderName == "Npgsql.EntityFrameworkCore.PostgreSQL";
+        var timestampType = isPostgres ? "timestamp without time zone" : "datetime2(6)";
+        const string timeType = "time(0)";
+
+        modelBuilder.Entity<StudentProfile>().HasIndex(x => x.Email).IsUnique()
+            .HasFilter(isPostgres ? "\"Email\" IS NOT NULL" : "[Email] IS NOT NULL");
         modelBuilder.Entity<StudentProfile>().Property(x => x.CreatedAt)
-            .HasColumnType("timestamp without time zone").HasConversion(UtcTimestampConverter);
+            .HasColumnType(timestampType).HasConversion(UtcTimestampConverter);
         modelBuilder.Entity<StudentProfile>().Property(x => x.UpdatedAt)
-            .HasColumnType("timestamp without time zone").HasConversion(UtcTimestampConverter);
-        modelBuilder.Entity<ClassSchedule>().Property(x => x.StartTime).HasColumnType("time without time zone");
-        modelBuilder.Entity<ClassSchedule>().Property(x => x.EndTime).HasColumnType("time without time zone");
-        modelBuilder.Entity<CalendarEvent>().Property(x => x.EventTime).HasColumnType("time without time zone");
-        modelBuilder.Entity<Alarm>().Property(x => x.AlarmTime).HasColumnType("time without time zone");
+            .HasColumnType(timestampType).HasConversion(UtcTimestampConverter);
+        modelBuilder.Entity<ClassSchedule>().Property(x => x.StartTime).HasColumnType(timeType);
+        modelBuilder.Entity<ClassSchedule>().Property(x => x.EndTime).HasColumnType(timeType);
+        modelBuilder.Entity<CalendarEvent>().Property(x => x.EventTime).HasColumnType(timeType);
+        modelBuilder.Entity<Alarm>().Property(x => x.AlarmTime).HasColumnType(timeType);
         modelBuilder.Entity<Alarm>().Property(x => x.CreatedAt)
-            .HasColumnType("timestamp without time zone").HasConversion(UtcTimestampConverter);
+            .HasColumnType(timestampType).HasConversion(UtcTimestampConverter);
         modelBuilder.Entity<Alarm>().Property(x => x.UpdatedAt)
-            .HasColumnType("timestamp without time zone").HasConversion(UtcTimestampConverter);
+            .HasColumnType(timestampType).HasConversion(UtcTimestampConverter);
         modelBuilder.Entity<StudentTask>().Property(x => x.CreatedAt)
-            .HasColumnType("timestamp without time zone").HasConversion(UtcTimestampConverter);
+            .HasColumnType(timestampType).HasConversion(UtcTimestampConverter);
         modelBuilder.Entity<StudySession>().Property(x => x.StartedAt)
-            .HasColumnType("timestamp without time zone").HasConversion(UtcTimestampConverter);
+            .HasColumnType(timestampType).HasConversion(UtcTimestampConverter);
         modelBuilder.Entity<ClassSchedule>().HasIndex(x => new { x.StudentId, x.DayOfWeek, x.StartTime });
         modelBuilder.Entity<CalendarEvent>().HasIndex(x => new { x.StudentId, x.EventDate });
         modelBuilder.Entity<Expense>().HasIndex(x => new { x.StudentId, x.ExpenseDate });

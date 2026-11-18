@@ -1,35 +1,169 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="light" data-bs-theme="light">
 <head>
-  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Uptime Student App — timetable, calendar sync, assignments, budget and focus analytics for students. Built with ASP.NET Core, EF Core and Swagger.">
+  <meta name="theme-color" content="#1747d1">
   <title>Uptime | Student Productivity</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="icon" href="images/student-icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="lib/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="css/site.css">
 </head>
 <body>
+<svg class="svg-sprite" aria-hidden="true" focusable="false">
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+  <symbol id="i-week" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18M8 13h2M14 13h2M8 17h2M14 17h2"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M8 2v4M16 2v4M3 9h18"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-wand" viewBox="0 0 24 24"><path d="m15 4 5 5M13 6l5 5M4 20l9-9M6 3l1.2 2.8L10 7 7.2 8.2 6 11l-1.2-2.8L2 7l2.8-1.2L6 3Z"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M16 14h2"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5V16h8v-2.5A6 6 0 0 0 12 3Z"/></symbol>
+  <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+  <symbol id="i-api" viewBox="0 0 24 24"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 6l-4 12"/></symbol>
+  <symbol id="i-present" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8M8 8h8M8 11h5"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 8a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V2a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 21V9M7 14l5-5 5 5M4 3h16"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15M10 11v6M14 11v6"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2ZM19 15l.9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5l11 7-11 7V5Z"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7M20 4v7h-7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7 0l2-2a5 5 0 0 0-7-7l-1 1M14 11a5 5 0 0 0-7 0l-2 2a5 5 0 0 0 7 7l1-1"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 9v4M12 17h.01"/></symbol>
+  <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h5v18H6a2 2 0 0 1-2-2V5ZM11 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7"/></symbol>
+  <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></symbol>
+  <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5Z"/></symbol>
+  <symbol id="i-edit" viewBox="0 0 24 24"><path d="M4 20h4L20 8l-4-4L4 16v4ZM14 6l4 4"/></symbol>
+</svg>
+
 <div class="app-shell">
-  <aside class="sidebar">
-    <a class="brand" href="#" onclick="showPage('Dashboard');return false;">
-      <img class="cap" src="images/student-icon.svg" alt="Student icon"><span class="brand-name">UPTIME</span><small>STUDENT APP</small>
+  <div class="scrim" id="scrim" onclick="closeDrawer()"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#/dashboard" onclick="showPage('Dashboard');return false;">
+      <img class="brand-mark" src="images/student-icon.svg" alt="">
+      <span class="brand-text"><b>UPTIME</b><small>STUDENT APP</small></span>
     </a>
-    <nav id="navigation">
-      <button class="nav-link active" data-page="Dashboard">▦ <span>Dashboard</span></button>
-      <button class="nav-link" data-page="Timetable">▤ <span>Timetable</span></button>
-      <button class="nav-link" data-page="Calendar">▦ <span>Calendar</span></button>
-      <button class="nav-link" data-page="Budget">◉ <span>Budget</span></button>
-      <button class="nav-link" data-page="Tasks">☑ <span>Tasks</span></button>
-      <button class="nav-link" data-page="Study Timer">◷ <span>Study Timer</span></button>
-      <button class="nav-link" data-page="Alarms">◉ <span>Alarms</span></button>
-      <button class="nav-link" data-page="Settings">⚙ <span>Settings</span></button>
+
+    <nav id="navigation" aria-label="Main navigation">
+      <div class="nav-group">
+        <p class="nav-label">Overview</p>
+        <button class="nav-link" data-page="Dashboard"><svg class="ico"><use href="#i-grid"/></svg><span>Dashboard</span></button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-label">Plan</p>
+        <button class="nav-link" data-page="Timetable"><svg class="ico"><use href="#i-week"/></svg><span>Timetable</span></button>
+        <button class="nav-link" data-page="Calendar"><svg class="ico"><use href="#i-calendar"/></svg><span>Calendar</span></button>
+        <button class="nav-link" data-page="Tasks"><svg class="ico"><use href="#i-check"/></svg><span>Tasks</span></button>
+        <button class="nav-link" data-page="Assignment Helper"><svg class="ico"><use href="#i-wand"/></svg><span>Assignment Helper</span></button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-label">Student life</p>
+        <button class="nav-link" data-page="Budget"><svg class="ico"><use href="#i-wallet"/></svg><span>Budget</span></button>
+        <button class="nav-link" data-page="Study Timer"><svg class="ico"><use href="#i-timer"/></svg><span>Study Timer</span></button>
+        <button class="nav-link" data-page="Alarms"><svg class="ico"><use href="#i-bell"/></svg><span>Alarms</span></button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-label">Learn</p>
+        <button class="nav-link" data-page="Research Hub"><svg class="ico"><use href="#i-globe"/></svg><span>Research Hub</span></button>
+        <button class="nav-link" data-page="Study Lab"><svg class="ico"><use href="#i-bulb"/></svg><span>Study Lab</span></button>
+      </div>
+      <div class="nav-group">
+        <p class="nav-label">Build &amp; present</p>
+        <button class="nav-link" data-page="Database"><svg class="ico"><use href="#i-database"/></svg><span>Database &amp; ERD</span></button>
+        <button class="nav-link" data-page="API Workflow"><svg class="ico"><use href="#i-api"/></svg><span>API Workflow</span></button>
+        <button class="nav-link" data-page="Presentation Kit"><svg class="ico"><use href="#i-present"/></svg><span>Presentation Kit</span></button>
+        <button class="nav-link" data-page="Settings"><svg class="ico"><use href="#i-settings"/></svg><span>Settings</span></button>
+      </div>
     </nav>
-    <div class="sidebar-bottom"><div class="avatar">U</div><div><b id="sideName">Student</b><small id="sideInstitution">Your institution</small></div></div>
+
+    <div class="sidebar-bottom">
+      <span class="avatar" id="sideAvatar">U</span>
+      <div class="sidebar-user">
+        <b id="sideName">Student</b>
+        <small id="sideInstitution">Your institution</small>
+      </div>
+    </div>
   </aside>
+
   <main class="main-area">
-    <header class="topbar"><div><small class="muted">YOUR PERSONAL STUDY SPACE</small><h2 id="pageTitle">Dashboard</h2></div><div class="top-actions"><span id="todayLabel"></span><button class="btn btn-primary" onclick="showPage('Settings')">My Profile</button></div></header>
-    <section id="content" class="content-area"></section>
-    <footer><div class="footer-brand"><span>🎓</span><b>UPTIME</b></div><div>Developed by <b>Reinhold IT Solutions</b> · © 2026</div></footer>
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="icon-btn menu-btn" onclick="openDrawer()" aria-label="Open navigation">
+          <svg class="ico"><use href="#i-menu"/></svg>
+        </button>
+        <div class="page-heading">
+          <p class="eyebrow" id="pageEyebrow">YOUR PERSONAL STUDY SPACE</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="search-trigger" onclick="openCommandPalette()" aria-label="Search pages and actions">
+          <svg class="ico"><use href="#i-search"/></svg>
+          <span>Search or jump to…</span>
+          <kbd>Ctrl K</kbd>
+        </button>
+        <span class="date-chip" id="todayLabel"></span>
+        <button class="icon-btn" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle colour theme">
+          <svg class="ico theme-icon-sun"><use href="#i-sun"/></svg>
+          <svg class="ico theme-icon-moon"><use href="#i-moon"/></svg>
+        </button>
+        <button class="profile-chip" onclick="showPage('Settings')" aria-label="Open profile settings">
+          <span class="avatar avatar-sm" id="topAvatar">U</span>
+          <span class="profile-chip-text"><b id="topName">Student</b><small id="topInstitution">Your institution</small></span>
+        </button>
+      </div>
+    </header>
+
+    <section id="content" class="content-area" aria-live="polite"></section>
+
+    <footer class="app-footer">
+      <div class="footer-brand"><img src="images/student-icon.svg" alt=""><b>UPTIME</b><span>Student App</span></div>
+      <div class="footer-meta">
+        <span class="health-pill" id="healthState"><i></i> Checking API…</span>
+        <span>.NET 10 · SQL Server / PostgreSQL · Swagger</span>
+        <span>Developed by <b>Reinhold IT Solutions</b> · © 2026</span>
+      </div>
+    </footer>
   </main>
 </div>
-<div id="toast" class="toast-message"></div>
+
+<div id="toast" class="toast-message" role="status" aria-live="polite"></div>
+<div id="modalRoot"></div>
+
+<div class="palette" id="commandPalette" hidden>
+  <div class="palette-scrim" onclick="closeCommandPalette()"></div>
+  <div class="palette-card" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="palette-input">
+      <svg class="ico"><use href="#i-search"/></svg>
+      <input id="paletteInput" type="text" placeholder="Search pages and actions…" autocomplete="off" spellcheck="false">
+      <kbd>Esc</kbd>
+    </div>
+    <div class="palette-list" id="paletteList"></div>
+    <div class="palette-foot"><span>↑ ↓ navigate</span><span>↵ open</span><span>Esc close</span></div>
+  </div>
+</div>
+
+<audio id="toneAudio" preload="auto"></audio>
+<noscript><div class="noscript">Uptime needs JavaScript for its interactive dashboard.</div></noscript>
 <script src="js/app.js"></script>
-</body></html>
+</body>
+</html>

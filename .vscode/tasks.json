@@ -10,6 +10,51 @@
                 "${workspaceFolder}\\UptimeStudentApp.csproj"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "run",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\scripts\\run.ps1"
+            ],
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Uptime: connect SQL Server",
+            "detail": "Verify Windows Authentication and apply only missing objects from the additive SQL Server schema.",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${workspaceFolder}\\scripts\\connect-sqlserver.ps1"
+            ],
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            }
+        },
+        {
+            "label": "Uptime: open Swagger",
+            "detail": "Opens http://localhost:5000/swagger in the browser.",
+            "type": "process",
+            "command": "powershell",
+            "args": [
+                "-NoProfile",
+                "-Command",
+                "Start-Process 'http://localhost:5000/swagger'"
+            ],
+            "problemMatcher": []
         }
     ]
 }

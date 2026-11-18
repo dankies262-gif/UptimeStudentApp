@@ -27,6 +27,7 @@ public interface IStudentService
     Task<StudentProfile?> GetAsync(int id);
     Task<StudentProfile> CreateAsync(StudentProfileRequest request);
     Task<StudentProfile?> UpdateAsync(int id, StudentProfileRequest request);
+    Task<bool> DeleteAsync(int id);
 }
 
 public class StudentService(ApplicationDbContext db) : IStudentService
@@ -85,6 +86,17 @@ public class StudentService(ApplicationDbContext db) : IStudentService
         await db.SaveChangesAsync();
 
         return student;
+    }
+
+    public async Task<bool> DeleteAsync(int id)
+    {
+        var student = await db.StudentProfiles.FindAsync(id);
+        if (student is null)
+            return false;
+
+        db.StudentProfiles.Remove(student);
+        await db.SaveChangesAsync();
+        return true;
     }
 }
 
@@ -201,6 +213,11 @@ public interface IEventService
         int studentId,
         EventRequest request);
 
+    Task<bool> UpdateAsync(
+        int id,
+        int studentId,
+        EventRequest request);
+
     Task<bool> DeleteAsync(int id, int studentId);
 }
 
@@ -230,6 +247,27 @@ public class EventService(ApplicationDbContext db) : IEventService
         await db.SaveChangesAsync();
 
         return calendarEvent;
+    }
+
+    public async Task<bool> UpdateAsync(
+        int id,
+        int studentId,
+        EventRequest request)
+    {
+        var calendarEvent = await db.CalendarEvents.FirstOrDefaultAsync(
+            x => x.Id == id && x.StudentId == studentId);
+
+        if (calendarEvent is null)
+            return false;
+
+        calendarEvent.Title = request.Title.Trim();
+        calendarEvent.EventDate = request.EventDate;
+        calendarEvent.EventTime = request.EventTime;
+        calendarEvent.Description = request.Description;
+
+        await db.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<bool> DeleteAsync(int id, int studentId)
@@ -263,6 +301,11 @@ public interface IExpenseService
     Task<List<Expense>> ListAsync(int studentId);
 
     Task<Expense> AddAsync(
+        int studentId,
+        ExpenseRequest request);
+
+    Task<bool> UpdateAsync(
+        int id,
         int studentId,
         ExpenseRequest request);
 
@@ -301,6 +344,33 @@ public class ExpenseService(ApplicationDbContext db) : IExpenseService
         await db.SaveChangesAsync();
 
         return expense;
+    }
+
+    public async Task<bool> UpdateAsync(
+        int id,
+        int studentId,
+        ExpenseRequest request)
+    {
+        if (request.Amount <= 0)
+        {
+            throw new ArgumentException(
+                "Amount must be greater than zero.");
+        }
+
+        var expense = await db.Expenses.FirstOrDefaultAsync(
+            x => x.Id == id && x.StudentId == studentId);
+
+        if (expense is null)
+            return false;
+
+        expense.Name = request.Name.Trim();
+        expense.Amount = request.Amount;
+        expense.Category = request.Category.Trim();
+        expense.ExpenseDate = request.ExpenseDate;
+
+        await db.SaveChangesAsync();
+
+        return true;
     }
 
     public async Task<bool> DeleteAsync(int id, int studentId)

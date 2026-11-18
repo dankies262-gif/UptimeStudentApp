@@ -1,0 +1,30 @@
+# Render Blueprint for the public Uptime demo.
+# One free web service (Docker) plus one free managed PostgreSQL database.
+# Local development keeps using SQL Server on 192.168.1.162; the hosted copy
+# selects PostgreSQL through UPTIME_DB_PROVIDER.
+#
+# Free plan notes: the service sleeps after 15 minutes idle, the filesystem is
+# ephemeral (uploaded profile photos reset on deploy) and free databases expire
+# after 30 days unless upgraded.
+databases:
+  - name: uptime-db
+    plan: free
+    databaseName: uptime
+    user: uptime
+
+services:
+  - type: web
+    name: uptime-student-app
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: UPTIME_DB_PROVIDER
+        value: PostgreSQL
+      - key: UPTIME_DB_INITIALIZE
+        value: "true"
+      - key: UPTIME_DB_CONNECTION
+        fromDatabase:
+          name: uptime-db
+          property: connectionString

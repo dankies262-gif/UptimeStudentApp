@@ -13,6 +13,7 @@ public class StudentProfile
     [MaxLength(80)] public string? PreferredName { get; set; }
     [Required, MaxLength(150)] public string InstitutionName { get; set; } = "";
     [MaxLength(150)] public string? Email { get; set; }
+    [MaxLength(300)] public string? PhotoUrl { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     public List<ClassSchedule> Classes { get; set; } = [];

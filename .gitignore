@@ -8,3 +8,5 @@ appsettings.Development.json
 .env.*
 !.env.example
 *.log
+*.zip
+wwwroot/uploads/

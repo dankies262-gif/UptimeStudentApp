@@ -8,7 +8,15 @@ public record StudentProfileRequest(
     [Required, StringLength(80, MinimumLength = 1)] string LastName,
     [StringLength(80)] string? PreferredName,
     [Required, StringLength(150, MinimumLength = 2)] string InstitutionName,
-    [EmailAddress, StringLength(150)] string? Email);
+    [OptionalEmailAddress, StringLength(150)] string? Email);
+
+public sealed class OptionalEmailAddressAttribute : ValidationAttribute
+{
+    public override bool IsValid(object? value) =>
+        value is null ||
+        value is string email &&
+        (string.IsNullOrWhiteSpace(email) || new EmailAddressAttribute().IsValid(email));
+}
 
 public record ClassRequest(
     [Required, StringLength(150)] string Course,
@@ -51,4 +59,5 @@ public record SettingsRequest(
 
 public record StudySessionRequest(
     [Required, StringLength(150)] string Subject,
-    [Range(1, 1440)] int DurationMinutes);
+    [Range(1, 1440)] int DurationMinutes,
+    DateTime? StartedAt = null);
